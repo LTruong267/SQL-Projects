@@ -1,0 +1,42 @@
+-- Tables with madeup data
+
+-- Table 1: Products
+
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name CHAR(50),
+    location CHAR(50),
+    status CHAR(20), -- sold, shipped, returning, inventory
+    cost_of_goods DECIMAL(10,2)
+);
+
+INSERT INTO products (product_id, product_name, location, status, cost_of_goods) VALUES
+(1, 'Green Dress', 'Bin A', 'inventory', 12.50),
+(2, 'Running Shoes', 'Bin B', 'sold', 25.00),
+(3, 'Winter coat', 'Bin A', 'shipped', 18.00),
+(4, 'Raincoat', 'Bin C', 'returning', 3.00),
+(5, 'Gaming Keyboard', 'Bin B', 'sold', 45.00);
+
+
+-- Table 2: Sales
+
+CREATE TABLE sales (
+    sale_id INT PRIMARY KEY,
+    product_id INT,
+    purchase_date DATE,
+    selling_platform CHAR(20), -- eBay, Poshmark, Mercari, etc.
+    sale_completion_date DATE,
+    selling_price DECIMAL(10,2),
+    fees DECIMAL(10,2),
+    shipping_fee DECIMAL(10,2),
+  -- foreign key constraint in the sales table. A foreign key is a way to link two tables together so the database knows that certain values in one table must exist in another table.
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO sales (sale_id, product_id, purchase_date, selling_platform, sale_completion_date, selling_price, fees, shipping_fee) VALUES
+(1, 2, '2025-08-10', 'Poshmark', '2025-08-12', 50.00, 5.00, 7.00),
+(2, 5, '2025-08-11', 'eBay', '2025-08-13', 90.00, 7.50, 10.00),
+(3, 3, '2025-08-09', 'Mercari', '2025-08-10', 35.00, 3.50, 5.00),
+(4, 4, '2025-08-08', 'Poshmark', '2025-08-09', 10.00, 1.00, 2.50),
+(5, 1, '2025-08-12', 'Mercari', '2025-08-01', 50, 2, 10.00);
+
