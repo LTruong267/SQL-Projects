@@ -1,0 +1,28 @@
+-- 1. Show all products with their current status
+SELECT * FROM products;
+
+-- 2. Show all sales including product name and profit
+SELECT 
+    s.sale_id, 
+    p.product_name, 
+    s.selling_platform, 
+    s.selling_price, 
+    p.cost_of_goods,
+    (s.selling_price - p.cost_of_goods - s.fees - s.shipping_fee) AS profit
+FROM sales s
+JOIN products p ON s.product_id = p.product_id;
+
+-- 3. Count how many products are in each status
+SELECT status, COUNT(*) AS count_per_status
+FROM products
+GROUP BY status;
+
+-- 4. Total revenue per platform
+SELECT selling_platform, SUM(selling_price) AS total_revenue
+FROM sales
+GROUP BY selling_platform;
+
+-- 5. Show unsold inventory
+SELECT * 
+FROM products 
+WHERE status = 'inventory';
